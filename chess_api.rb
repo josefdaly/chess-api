@@ -2,6 +2,10 @@ require 'sinatra'
 require 'uci'
 require 'json'
 
+get '/' do
+  send_file './html/index.html'
+end
+
 get '/next_best/:moves' do
   content_type :json
   uci = Uci.new(:engine_path => './stockfish')
