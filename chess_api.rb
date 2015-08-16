@@ -10,10 +10,15 @@ get '/next_best/:moves' do
     uci.move_piece(move)
   end
   board_before_move = uci.board
+
+  while !uci.ready? do
+    sleep(1)
+  end
+
   begin
-    best_move = uci.bestmove
+    best_move = uci.go!.last
   rescue ReturnStringError
     retry
   end
-  { moves: moves, boardBefore: board_before_move, bestNext: best_move }.to_json
+  { moves: uci.moves, boardBefore: board_before_move, bestNext: best_move }.to_json
 end
