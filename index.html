@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>Chess API</title>
+  <link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+ </head>
+ <body>
+   <script src="./js/jquery-2.1.1.js"></script>
+   <!-- Whackjobs at GithubPages don't understand symlinks... -->
+   <script src="./js/utils.js"></script>
+   <script src="./js/piece.js"></script>
+   <script src="./js/slidingPiece.js"></script>
+   <script src="./js/steppingPiece.js"></script>
+   <script src="./js/bishop.js"></script>
+   <script src="./js/king.js"></script>
+   <script src="./js/knight.js"></script>
+   <script src="./js/queen.js"></script>
+   <script src="./js/rook.js"></script>
+   <script src="./js/pawn.js"></script>
+   <script src="./js/board.js"></script>
+   <script src="./js/game.js"></script>
+   <script src="./js/gameView.js"></script>
+   <h2>Joe's Chess API</h2>
+   <div class="container">
+    </div>
+
+   <p>
+     Welcome. The purpose of this app is to provide API endpoints for chess.
+     At present I'm not sure what, if any, would be particularly useful. Right now,
+     the relative route /next_best/ will take a string of moves and return a JSON
+     containing an AI move, generated using the Stockfish Chess Engine.
+   </p>
+   <p>
+     So for example, if you typed into your url bar
+     "http://chess-api.herokuapp.com/next_best/a2a3e7e5e2e4", you might get a JSON
+     containing the following:
+   </p>
+   <p>
+     {"moves":["a2a3","e7e5","e2e4","b8c6"],"boardBefore":"  ABCDEFGH\n8 rnbqkbnr\n7
+     pppp.ppp\n6 ........\n5 ....p...\n4 ....P...\n3 P.......\n2 .PPP.PPP\n1
+     RNBQKBNR\n","bestNext":"b8c6"}
+   </p>
+   <p>
+     bestNext is a string representation of the computer's response to the
+     previous moves. In this case, it's Knight at b8 to c6.
+   </p>
+   <p>
+     Moves is an array containing all of the game moves, including the computer's
+     most recent move.
+   </p>
+   <p>
+     boardBefore is a string representation of the game board before that move
+     was made.
+   </p>
+
+   <script type="text/javascript">
+     var view = new Chess.GameView($(".container"));
+   </script>
+ </body>
+</html>

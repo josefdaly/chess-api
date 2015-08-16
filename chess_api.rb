@@ -3,7 +3,7 @@ require 'uci'
 require 'json'
 
 get '/' do
-  send_file './html/index.html'
+  send_file './index.html'
 end
 
 get '/next_best/:moves' do
