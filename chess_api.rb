@@ -18,8 +18,6 @@ get '/next_best/:moves' do
     uci.move_piece(move)
   end
 
-  board_before_move = uci.board
-
   while !uci.ready? do
     sleep(1)
   end
@@ -30,7 +28,7 @@ get '/next_best/:moves' do
     retry
   end
 
-  { moves: uci.moves, boardBefore: board_before_move, bestNext: best_move }.to_json
+  { bestNext: best_move }.to_json
 end
 
 #takes movestring and returns true if the last move is valid
@@ -54,6 +52,36 @@ get '/valid_move/:moves' do
   { validMove: valid_move }.to_json
 end
 
+# Possible values
+#   'in_progress'
+#     the game is in progress.
+#
+#   'white_won'
+#     white player has won with a checkmate.
+#
+#   'black_won'
+#     black player has won with a checkmate.
+#
+#   'white_won_resign'
+#     white player has won for resign.
+#
+#   'black_won_resign'
+#     black player has won for resign.
+#
+#   'stalemate'
+#     draw for stalemate.
+#
+#   'insufficient_material'
+#     draw for insufficient material to checkmate.
+#
+#   'fifty_rule_move'
+#     draw for fifty rule move.
+#
+#   'threefold_repetition'
+#     draw for threefold_repetition.
+#
+#   'unknown'
+#     something went wrong.
 get '/status/:moves' do
   content_type :json
   game = Chess::Game.new
@@ -63,4 +91,15 @@ get '/status/:moves' do
   end
 
   { gameStatus: game.status.to_s }.to_json
+end
+
+get '/board_string/:moves' do
+  content_type :json
+  game = Chess::Game.new
+  moves = params[:moves].scan(/..../)
+  moves.each do |move|
+    game.move(move)
+  end
+
+  { board: game.board.to_s }.to_json
 end
