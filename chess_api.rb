@@ -4,13 +4,14 @@ require 'json'
 require 'chess'
 
 get '/' do
-  send_file './index.html'
+  send_file './public/html/index.html'
 end
 
 #takes movestring and
 #assumes movestring is valid
 get '/next_best/:moves' do
   content_type :json
+  response.headers['Access-Control-Allow-Origin'] = '*'
   uci = Uci.new(:engine_path => './stockfish')
   moves = params[:moves].scan(/..../)
 
@@ -35,6 +36,7 @@ end
 #assumes all moves before last move are valid
 get '/valid_move/:moves' do
   content_type :json
+  response.headers['Access-Control-Allow-Origin'] = '*'
   valid_move = true
   game = Chess::Game.new
   moves = params[:moves].scan(/..../)
@@ -84,6 +86,7 @@ end
 #     something went wrong.
 get '/status/:moves' do
   content_type :json
+  response.headers['Access-Control-Allow-Origin'] = '*'
   game = Chess::Game.new
   moves = params[:moves].scan(/..../)
   moves.each do |move|
@@ -95,6 +98,7 @@ end
 
 get '/board_string/:moves' do
   content_type :json
+  response.headers['Access-Control-Allow-Origin'] = '*'
   game = Chess::Game.new
   moves = params[:moves].scan(/..../)
   moves.each do |move|
