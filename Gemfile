@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'sinatra'
+gem 'sinatra', '2.1.0'
 gem 'uci'
-gem 'json'
+gem 'json', '2.3.1'
 gem 'chess'
